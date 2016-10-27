@@ -1,0 +1,11 @@
+
+public interface ClassA {
+
+        package com.mypackage ClassB {
+                java.lang.String classBName;
+                java.lang.String classBVar;
+        }
+            java.lang.String classAVar;
+
+}
+
