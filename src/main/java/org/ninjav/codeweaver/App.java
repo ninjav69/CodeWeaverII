@@ -1,23 +1,18 @@
 package org.ninjav.codeweaver;
 
-import com.thoughtworks.qdox.JavaProjectBuilder;
-import com.thoughtworks.qdox.model.JavaClass;
-import com.thoughtworks.qdox.model.JavaMember;
-import com.thoughtworks.qdox.model.JavaMethod;
-import com.thoughtworks.qdox.model.JavaParameter;
-import com.thoughtworks.qdox.model.JavaSource;
-import freemarker.template.Configuration;
-import freemarker.template.Template;
-import freemarker.template.TemplateException;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+
+import com.thoughtworks.qdox.JavaProjectBuilder;
+import com.thoughtworks.qdox.model.JavaClass;
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
 
 /**
  * Freemarker cookie-cutter goodness.
@@ -77,9 +72,10 @@ public class App {
             //Template template = cfg.getTemplate("soapserver.ftl");
 
             // Build the data-model
-            HashMap<String, JavaClass> data = new HashMap<String, JavaClass>();
+            HashMap<String, Object> data = new HashMap<>();
             data.put("class", builder.getClasses().toArray(new JavaClass[]{})[0]);
-            
+            data.put("builder", builder);
+
             for (JavaClass clazz : builder.getClasses()) {
                 data.put(clazz.getName(), clazz);
             }
@@ -102,50 +98,3 @@ public class App {
         }
     }
 }
-
-/*
- for (JavaClass jc : builder.getClasses()) {
- System.out.println("Class: " + jc.getName());
-            
- for (JavaMethod jm : jc.getMethods()) {
- System.out.println("  Method: " + jm.getName());
- System.out.println("  Type: " + jm.getReturnType().getValue());
-                
- for (JavaParameter jp : jm.getParameters()) {
- System.out.println("     Param: " + jp.getName());
- System.out.println("     Type: " + jp.getType().getValue());
- }
- }
- }
- */
-/*        
- // creates an input stream for the file to be parsed
- FileInputStream in = new FileInputStream(args[0]);
-
- CompilationUnit cu;
- try {
- // parse the file
- cu = JavaParser.parse(in);
- } finally {
- in.close();
- }
-
- // prints the resulting compilation unit to default system output
- //System.out.println(cu.toString());
- System.out.println("Package: " + cu.getPackage());
- for (TypeDeclaration t : cu.getTypes()) {
- System.out.println("  Type: " + t.getName());
- for (BodyDeclaration b : t.getMembers()) {
- if (b instanceof MethodDeclaration) {
- MethodDeclaration method = (MethodDeclaration) b;
-                    
- System.out.println("     Method: " + method.getName());
- System.out.println("     Type: " + method.getType());
-
- for (Parameter p : method.getParameters()) {
- System.out.println("       Parameter: " + p.getId());
- }
- }
- }
- }
- */
